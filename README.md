@@ -1,56 +1,53 @@
-# Welcome to your Expo app 👋
+# 🗡️ 孤胆英雄 (Lone Hero)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> **把你的自律生活变成一场硬核 RPG 游戏！**
 
-## Get started
+`孤胆英雄` 是一款基于 **React Native** 和 **Expo** 框架开发的“游戏化”待办事项（To-Do List）与习惯养成 App。在这里，你不再是被死板的清单驱使的社畜，而是一名不断接取悬赏、打怪升级的绝世英雄。
 
-1. Install dependencies
+---
 
+## ✨ 核心玩法 (Features)
+
+*   📝 **悬赏任务 (Quest Board)**: 像接取 RPG 悬赏任务一样记录你的日常待办。
+*   ⚔️ **打怪升级 (Level Up)**: 每完成一项现实生活中的任务，即可获得经验值（EXP）和金币。经验值累积可提升英雄等级，获得极大的成就感。
+*   🛡️ **装备商店 (Armory)**: 现实里的自律能变现！使用赚取来的金币在商店中购买强大的武器和拉风的防具。
+*   🎒 **行囊系统 (Inventory)**: 查看你的战利品，自由穿脱购买来的神装，打造你的专属战神。
+*   🎨 **赛博朋克风 (Cyberpunk Aesthetic)**: 采用极具现代感的暗黑 UI 风格与霓虹配色，体验沉浸式的硬核冒险。
+
+## 🚀 技术栈 (Tech Stack)
+
+*   **框架**: [React Native](https://reactnative.dev/)
+*   **工具链**: [Expo SDK 54](https://expo.dev/) (配合 Expo Router 实现丝滑导航)
+*   **前端语言**: TypeScript + React
+*   **本地存储**: AsyncStorage (数据完全保存在本地，保护隐私无断网焦虑)
+
+## 🛠️ 如何在本地运行 (How to Run)
+
+如果你想把这个项目克隆到本地进行开发或二次修改，请按照以下步骤操作：
+
+1. **安装依赖**
+   请确保你的电脑上安装了 [Node.js](https://nodejs.org/)。然后在项目根目录下运行：
    ```bash
    npm install
    ```
 
-2. Start the app
-
+2. **启动本地开发服务器**
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+3. **在手机上预览**
+   * 下载 **Expo Go** App (iOS / Android)。
+   * 手机与电脑连入同一个局域网 (Wi-Fi)，扫描终端中出现的二维码即可直接游玩！
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📦 如何打包安装包 (Build Standalone App)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+本项目已完美配置云端自动化打包，甚至支持为 **越狱 iPhone** 生成原生免签 `.ipa`！
 
-## Get a fresh project
+*   **Android (APK)**:
+    在本地运行 `npx eas-cli build -p android --profile preview` 即可打出安卓安装包。
+*   **iOS (越狱设备专属 IPA)**:
+    只需将代码 Push 到本 GitHub 仓库，内置的 [GitHub Actions Workflow](.github/workflows/build-ios.yml) 就会自动在一台免费的云端 Mac 服务器上为您编译出 `.ipa`，请在 Action 运行完毕后在底部的 `Artifacts` 中下载。
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+*“你的每一次自律，都是对平庸挥出的一记重剑。”*
