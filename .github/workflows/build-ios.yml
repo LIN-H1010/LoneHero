@@ -20,6 +20,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Patch Expo File System
+        run: |
+          sed -i '' 's/- (void)URLSession:(NSURLSession \*)session task:(NSURLSessionTask \*)task didCompleteWithError:(NSError \*)error;/- (void)URLSession:(NSURLSession \* _Nonnull)session task:(NSURLSessionTask \* _Nonnull)task didCompleteWithError:(NSError \* _Nullable)error;/g' node_modules/expo-file-system/ios/Legacy/EXSessionTasks/EXSessionTaskDelegate.h || true
+
       - name: Prebuild iOS project
         run: npx expo prebuild -p ios
 
