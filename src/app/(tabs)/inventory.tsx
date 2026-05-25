@@ -12,11 +12,11 @@ export default function InventoryScreen() {
       Alert.alert("等级不足！", "需要达到 Lv.2 才能转职圣骑士。");
       return;
     }
-    if (gold < 300) {
-      Alert.alert("金币不足！", "转职需要 300 金币。");
+    if (gold < 500) {
+      Alert.alert("金币不足！", "转职需要 500 金币。");
       return;
     }
-    buyHeroUpgrade(2, 300);
+    buyHeroUpgrade(2, 500);
     Alert.alert("转职成功！", "你已解锁【圣骑士】！");
   };
 
@@ -25,20 +25,20 @@ export default function InventoryScreen() {
       Alert.alert("等级不足！", "需要达到 Lv.5 才能转职暗影刺客。");
       return;
     }
-    if (gold < 800) {
-      Alert.alert("金币不足！", "转职需要 800 金币。");
+    if (gold < 1500) {
+      Alert.alert("金币不足！", "转职需要 1500 金币。");
       return;
     }
-    buyHeroUpgrade(3, 800);
+    buyHeroUpgrade(3, 1500);
     Alert.alert("转职成功！", "你已解锁终极形态【暗影刺客】！");
   };
 
   const handleBuyPetPoring = () => {
-    if (gold < 250) {
-      Alert.alert("金币不足！", "购买宠物蛋需要 250 金币。");
+    if (gold < 400) {
+      Alert.alert("金币不足！", "购买宠物蛋需要 400 金币。");
       return;
     }
-    buyPet('treasure_poring', '寻宝波利', 250);
+    buyPet('treasure_poring', '寻宝波利', 400);
     Alert.alert("购买成功！", "获得了新宠物：寻宝波利！");
   };
 
@@ -47,11 +47,11 @@ export default function InventoryScreen() {
       Alert.alert("等级不足！", "需要达到 Lv.3 才能购买学霸飞龙蛋。");
       return;
     }
-    if (gold < 600) {
-      Alert.alert("金币不足！", "购买宠物蛋需要 600 金币。");
+    if (gold < 800) {
+      Alert.alert("金币不足！", "购买宠物蛋需要 800 金币。");
       return;
     }
-    buyPet('scholar_dragon', '学霸飞龙', 600);
+    buyPet('scholar_dragon', '学霸飞龙', 800);
     Alert.alert("购买成功！", "获得了新宠物：学霸飞龙！");
   };
 
@@ -227,7 +227,7 @@ export default function InventoryScreen() {
             {!ownedHeroTiers.includes(2) ? (
               <TouchableOpacity onPress={handleBuyHero2}>
                 <LinearGradient colors={['#f1c40f', '#f39c12']} style={styles.buyBtn}>
-                  <Text style={styles.buyBtnText}>300 金币</Text>
+                  <Text style={styles.buyBtnText}>500 金币</Text>
                 </LinearGradient>
               </TouchableOpacity>
             ) : (
@@ -247,7 +247,7 @@ export default function InventoryScreen() {
             {!ownedHeroTiers.includes(3) ? (
               <TouchableOpacity onPress={handleBuyHero3}>
                 <LinearGradient colors={['#ff4757', '#c0392b']} style={styles.buyBtn}>
-                  <Text style={[styles.buyBtnText, {color: '#fff'}]}>800 金币</Text>
+                  <Text style={[styles.buyBtnText, {color: '#fff'}]}>1500 金币</Text>
                 </LinearGradient>
               </TouchableOpacity>
             ) : (
@@ -266,7 +266,7 @@ export default function InventoryScreen() {
             {!ownedPets.some(p => p.type === 'treasure_poring') ? (
               <TouchableOpacity onPress={handleBuyPetPoring}>
                 <LinearGradient colors={['#f1c40f', '#f39c12']} style={styles.buyBtn}>
-                  <Text style={styles.buyBtnText}>250 金币</Text>
+                  <Text style={styles.buyBtnText}>400 金币</Text>
                 </LinearGradient>
               </TouchableOpacity>
             ) : (
@@ -286,7 +286,7 @@ export default function InventoryScreen() {
             {!ownedPets.some(p => p.type === 'scholar_dragon') ? (
               <TouchableOpacity onPress={handleBuyPetDragon}>
                 <LinearGradient colors={['#f1c40f', '#f39c12']} style={styles.buyBtn}>
-                  <Text style={styles.buyBtnText}>600 金币</Text>
+                  <Text style={styles.buyBtnText}>800 金币</Text>
                 </LinearGradient>
               </TouchableOpacity>
             ) : (

@@ -201,9 +201,9 @@ export default function CityScreen() {
                 {!task.completed && !overdue && (
                   <View style={{flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 5}}>
                     <FontAwesome5 name="coins" size={10} color="#f39c12" />
-                    <Text style={styles.taskReward}>5</Text>
+                    <Text style={styles.taskReward}>2</Text>
                     <FontAwesome5 name="star" size={10} color="#3498db" style={{marginLeft: 10}} />
-                    <Text style={styles.taskReward}>10</Text>
+                    <Text style={styles.taskReward}>5</Text>
                   </View>
                 )}
                 {overdue && !task.completed && <Text style={{color: '#ff4757', fontSize: 12, marginTop: 5}}>⚠️ 已逾期！完成无奖励，且每天都会扣钱！</Text>}
