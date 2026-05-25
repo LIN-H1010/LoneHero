@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Animated, Easing, TouchableOpacity, Alert, Imag
 import { useGameContext } from '../../store/GameContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
-import { scheduleLocalNotification, cancelNotification } from '../hooks/useNotifications';
+import { scheduleLocalNotification, cancelNotification } from '../../hooks/useNotifications';
 
 export default function BattleScreen() {
   const { level, addGold, addExp, activeHeroTier, ownedPets, activePetId, addBattleStats } = useGameContext();
