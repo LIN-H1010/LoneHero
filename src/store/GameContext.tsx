@@ -163,7 +163,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
           }
 
           if (isOverdue) {
-            penalty += 10;
+            // 根据要求，这里原本扣10金币，现在改为扣5金币
+            penalty += 5;
             failedTasksCount++;
             if (task.isDaily) {
               // 日常任务违约后，刷新它为今天的任务继续做
@@ -199,10 +200,13 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       if (pet.id === activePetId) {
         let newExp = pet.exp + amount;
         let newLevel = pet.level;
-        // 宠物升级逻辑：每级需要 50 经验，最高进化到 3 级
-        while (newExp >= newLevel * 50 && newLevel < 3) {
-          newExp -= newLevel * 50;
-          newLevel++;
+        // 宠物升级逻辑：硬核模式下大幅提高升级难度
+        // 1级->2级需要 150 经验；2级->3级需要 (500 - 150 = 350) 经验
+        while (newLevel === 1 && newExp >= 150) {
+          newLevel = 2;
+        }
+        while (newLevel === 2 && newExp >= 500) {
+          newLevel = 3;
         }
         return { ...pet, exp: newExp, level: newLevel };
       }
@@ -260,8 +264,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     
     // 逾期的任务不给奖励
     if (!isOverdue) {
-      addGold(5);
-      addExp(10);
+      addGold(2);
+      addExp(5);
     }
     
     setStats(prev => ({ ...prev, tasksCompleted: prev.tasksCompleted + 1 }));

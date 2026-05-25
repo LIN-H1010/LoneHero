@@ -116,11 +116,30 @@ export default function BattleScreen() {
       setTimeLeft(selectedDuration * 60);
     }
 
-    if (minutesCompleted > 0) {
-      const goldReward = minutesCompleted * 2;
-      const expReward = minutesCompleted * 4;
-      addGold(goldReward);
-      addExp(expReward);
+    if (minutesCompleted >= 10) {
+      // 递进式收益系统（极度克制版）
+      let goldMultiplier = 0;
+      let expMultiplier = 0;
+
+      if (minutesCompleted >= 60) {
+        goldMultiplier = 1 / 6;     // 60m = 10金 (约 0.166)
+        expMultiplier = 1 / 3;      // 60m = 20经验
+      } else if (minutesCompleted >= 45) {
+        goldMultiplier = 1 / 7.5;   // 45m = 6金 (约 0.133)
+        expMultiplier = 1 / 3.75;
+      } else if (minutesCompleted >= 25) {
+        goldMultiplier = 1 / 8.33;  // 25m = 3金 (约 0.120)
+        expMultiplier = 1 / 4.16;
+      } else {
+        goldMultiplier = 0.1;       // 10m = 1金 (0.1)
+        expMultiplier = 0.2;
+      }
+
+      const finalGold = Math.floor(minutesCompleted * goldMultiplier);
+      const finalExp = Math.floor(minutesCompleted * expMultiplier);
+
+      addGold(finalGold);
+      addExp(finalExp);
       
       let monsterType: 'slime' | 'goblin' | 'dragon' | 'demon' | 'dummy' = 'slime';
       if (selectedDuration === 'infinity') monsterType = 'dummy';
@@ -130,9 +149,9 @@ export default function BattleScreen() {
       
       addBattleStats(minutesCompleted, monsterType);
       
-      alert(`战斗胜利！获得了 ${goldReward} 金币和 ${expReward} 经验！`);
+      alert(`战斗胜利！获得了 ${finalGold} 金币和 ${finalExp} 经验！`);
     } else {
-      alert("修炼时间太短（不足1分钟），没有获得奖励。");
+      alert("修炼时间太短（不足 10 分钟），系统判定为无效专注，没有获得奖励。");
     }
   };
 
