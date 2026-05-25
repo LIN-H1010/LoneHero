@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Notifications from 'expo-notifications';
 
 export type Task = {
   id: string;
@@ -110,6 +111,34 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     };
     saveData();
   }, [gold, exp, level, tasks, ownedHeroTiers, activeHeroTier, ownedPets, activePetId, lastCheckDate, stats, isLoaded]);
+
+  // 调度哥布林晚间查岗推送 (每当 tasks 发生变化时，如果存在未完成的任务，就注册今晚 20:00 的推送)
+  useEffect(() => {
+    const setupDailyReminder = async () => {
+      // 先取消旧的定时器，避免重复注册
+      await Notifications.cancelAllScheduledNotificationsAsync();
+      
+      const hasUncompleted = tasks.some(t => !t.completed);
+      if (hasUncompleted) {
+        // 注册每天晚上 20:00 的重复推送
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "🚨 哥布林大军正在靠近！",
+            body: "你今天还有悬赏任务未完成，如果不做，明天会被抢走金币哦！",
+            sound: true,
+          },
+          trigger: {
+            hour: 20,
+            minute: 0,
+            repeats: true,
+          },
+        });
+      }
+    };
+    if (isLoaded) {
+      setupDailyReminder();
+    }
+  }, [tasks, isLoaded]);
 
   // 惩罚与刷新机制
   useEffect(() => {

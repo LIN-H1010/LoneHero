@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Animated, Easing, TouchableOpacity, Alert, Imag
 import { useGameContext } from '../../store/GameContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { scheduleLocalNotification, cancelNotification } from '../hooks/useNotifications';
 
 export default function BattleScreen() {
   const { level, addGold, addExp, activeHeroTier, ownedPets, activePetId, addBattleStats } = useGameContext();
@@ -17,6 +18,11 @@ export default function BattleScreen() {
   const monsterAnim = useRef(new Animated.Value(0)).current;
   const bgAnim = useRef(new Animated.Value(0)).current; // 添加背景动画，营造呼吸感
   const animLoops = useRef<any[]>([]);
+
+  // 绝对时间戳 (用于修复切后台不计时 Bug)
+  const targetEndTime = useRef<number>(0);
+  const activeStartTime = useRef<number>(0);
+  const notificationId = useRef<string | null>(null);
 
   // 动画控制
   useEffect(() => {
@@ -36,9 +42,10 @@ export default function BattleScreen() {
       } else {
         timer = setInterval(() => {
           if (selectedDuration === 'infinity') {
-            setTimeElapsed((prev) => prev + 1);
+            setTimeElapsed(Math.floor((Date.now() - activeStartTime.current) / 1000));
           } else {
-            setTimeLeft((prev) => prev - 1);
+            const remaining = Math.floor((targetEndTime.current - Date.now()) / 1000);
+            setTimeLeft(remaining > 0 ? remaining : 0);
           }
         }, 1000);
       }
@@ -95,6 +102,10 @@ export default function BattleScreen() {
 
   const handleFocusComplete = () => {
     setIsFocusing(false);
+    if (notificationId.current) {
+      cancelNotification(notificationId.current);
+      notificationId.current = null;
+    }
     
     let minutesCompleted = 0;
     if (selectedDuration === 'infinity') {
@@ -143,6 +154,10 @@ export default function BattleScreen() {
               setIsFocusing(false);
               setTimeLeft(selectedDuration * 60);
               setTimeElapsed(0);
+              if (notificationId.current) {
+                cancelNotification(notificationId.current);
+                notificationId.current = null;
+              }
               
               // 怪物嘲讽
               let tauntMsg = "";
@@ -160,7 +175,18 @@ export default function BattleScreen() {
       );
     } else {
       setIsFocusing(true);
-      if (selectedDuration !== 'infinity') setTimeLeft(selectedDuration * 60);
+      if (selectedDuration !== 'infinity') {
+        setTimeLeft(selectedDuration * 60);
+        targetEndTime.current = Date.now() + selectedDuration * 60 * 1000;
+        // 注册后台定时推送
+        scheduleLocalNotification(
+          "🎉 战斗结束！", 
+          "你设定的专注打怪时间已完成，快回城领取你的金币和经验奖励！", 
+          selectedDuration * 60
+        ).then(id => notificationId.current = id);
+      } else {
+        activeStartTime.current = Date.now();
+      }
       setTimeElapsed(0);
     }
   };
